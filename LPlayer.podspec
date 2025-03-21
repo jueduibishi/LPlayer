@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
 
   
   spec.name         = "LPlayer"
-  spec.version      = "0.0.5"
+  spec.version      = "0.1.0"
   spec.summary      = "一个基础的音频、视频播放器."
 
   
@@ -34,7 +34,7 @@ spec.swift_version = '5.0'
   
   # 如果LPlayer包含资源文件（如图片、xib等），需要额外指定资源文件路径
    spec.resource_bundles = {
-     'LPlayer' => ['LPlayerDemo/LPlayerDemo/classes/*.bundle']
+     'LPlayer' => ['LPlayer/LPlayerDemo/LPlayerDemo/classes/cover.bundle/**/*']
    }
   
   #spec.exclude_files = "Classes/Exclude"
