@@ -92,7 +92,7 @@ spec.swift_version = '5.0'
   #  Not including the public_header_files will make all headers public.
   #
   # 使用**&zwnj;/*.swift匹配所有子目录中的Swift文件
-  spec.source_files = "LPlayerDemo/LPlayerDemo/classes/&zwnj;**/*.swift"
+  spec.source_files = "LPlayerDemo/LPlayerDemo/classes/**/*.swift"
   
   # 如果LPlayer包含资源文件（如图片、xib等），需要额外指定资源文件路径
    spec.resource_bundles = {
