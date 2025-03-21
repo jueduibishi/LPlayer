@@ -14,19 +14,19 @@ public class LPlayerView: UIView {
     
     private var _player:AVPlayer
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         _player = AVPlayer()
         super.init(frame: frame)
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public override class var layerClass: AnyClass{
         LCustomLayer.self
     }
-    var player :AVPlayer{
+    public var player :AVPlayer{
         get{
             return _player
         }

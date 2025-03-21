@@ -9,17 +9,17 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 
-let APPName=Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "播放器";
+public let APPName=Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String ?? "播放器";
 //播放状态变更通知
-let Notification_PlayerStatusChange = "Notification_PlayerStatusChange"
+public let Notification_PlayerStatusChange = "Notification_PlayerStatusChange"
 ///示例addPlayerNotify(NSNotification.Name(Notification_PlayerStatusChange).rawValue,#selector(statusChange(_:)),self,nil)
-var addPlayerNotify:(_ notifyName:String,_ notifyFunc: Selector,_ targets: Any, _ obj:Any?)->()={
+public var addPlayerNotify:(_ notifyName:String,_ notifyFunc: Selector,_ targets: Any, _ obj:Any?)->()={
     (name:String, oneFunc: Selector,targets: Any,obj:Any?)->()
     in
     NotificationCenter.default.addObserver(targets, selector: oneFunc, name: Notification.Name(name), object: obj)
 }
 ///示例 sendNotify(Notification_netWorkChange,nil,[netWorkKey:newValue])
-var sendPlarNotify:(_ notifyName: String,_ targets: Any? ,_ userInfo: Any?)->()={(name: String, object: Any? , dic: Any?)->() in
+public var sendPlarNotify:(_ notifyName: String,_ targets: Any? ,_ userInfo: Any?)->()={(name: String, object: Any? , dic: Any?)->() in
     NotificationCenter.default.post(name: Notification.Name(name), object: object ,userInfo: dic as? [AnyHashable : Any]);
 }
 
@@ -60,46 +60,46 @@ public enum YFPlayerStatus {
 }
 
 //播放状态
-typealias playProgressHandel = (_ timeNow:String?,_ timeDuration:String?,_ progress:CGFloat)->()
+public typealias playProgressHandel = (_ timeNow:String?,_ timeDuration:String?,_ progress:CGFloat)->()
 //缓冲
-typealias bufferProHandel = (_ bufferProgress:CGFloat)->()
+public typealias bufferProHandel = (_ bufferProgress:CGFloat)->()
 @objcMembers
-class PlayerModel:NSObject{
-    var title:String? = nil
+public class PlayerModel:NSObject{
+    public var title:String? = nil
     
     /// 封面url
-    var cover:String? = nil
+    public var cover:String? = nil
     
     /// 播放地址
-    var url:String? = nil
+    public var url:String? = nil
 }
 @objcMembers
 /// 播放器管理
 public class LPlayerManager:NSObject,URLSessionDataDelegate{
     
     /// 播放器
-    var player:AVPlayer? = nil
+    public var player:AVPlayer? = nil
     
     /// 播放状态
-    var status:YFPlayerStatus = .YFPlayerStatusNon
+    public var status:YFPlayerStatus = .YFPlayerStatusNon
     
     /// 循环播放
-    var isLoop:Bool = false
+    public var isLoop:Bool = false
     
     /// 自动连播，默认开启
-    var aotoContinuePlay = true
+    public var aotoContinuePlay = true
     
     /// 正在播放
-    var isPlaying:Bool = false
+    public var isPlaying:Bool = false
     
     ///本地图片封面
-    var defaultCoverImageName:String = "defaultCover.png"
+    public var defaultCoverImageName:String = "defaultCover.png"
     
     /// 播放进度
-    var progressBlock :playProgressHandel? = nil
+    public var progressBlock :playProgressHandel? = nil
     
     /// 缓冲
-    var bufferBlock : bufferProHandel? = nil
+    public var bufferBlock : bufferProHandel? = nil
     
     //MARK: 私有属性
     
@@ -167,7 +167,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     
     //MARK: 初始化
     /// 单例模式
-    static let instance=LPlayerManager()
+    public static let instance=LPlayerManager()
     private override init() {
         super.init()
         for view in MPVolumeView().subviews {
@@ -183,7 +183,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     /// - Parameters:
     ///   - fileModel: curModel
     ///   - list: playerList
-    func setCurFile(_ fileModel:PlayerModel,list:[PlayerModel]){
+    public func setCurFile(_ fileModel:PlayerModel,list:[PlayerModel]){
         curModel = fileModel
         playerList = list
         self.pausePlay()
@@ -341,7 +341,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     
     //MARK: play
     /// 开始播放
-    func startPlay() {
+    public func startPlay() {
         if status == .YFPlayerStatusFail{
             //网络错误的时候 需要重新加载，不然网络恢复时一直无法播放
             self.loadMediaInfo();
@@ -356,7 +356,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     }
     
     /// 暂停播放
-    func pausePlay() {
+    public func pausePlay() {
         status = .YFPlayerStatusPause
         player?.pause()
         sendPlarNotify(Notification_PlayerStatusChange,nil,nil)
@@ -388,7 +388,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     }
     
     /// 停止播放
-    func endPlay(){
+    public func endPlay(){
         if player != nil{
             status = .YFPlayerStatusEnd
             player?.pause()
@@ -397,7 +397,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     }
     
     /// 上一首
-    func playLast(){
+    public func playLast(){
         if playerList?.count ?? 0 > 0 {
             var curIndex = 0
             for (i,item) in playerList!.enumerated(){
@@ -420,7 +420,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     }
     
     /// 下一首
-    func playNext(){
+    public func playNext(){
         if playerList?.count ?? 0 > 0 {
             var curIndex = 0
             for (i,item) in playerList!.enumerated(){
@@ -443,7 +443,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     }
     
     /// 视频播放器用到player时，退出播放页面时执行，释放时必须执行
-    func releasePlayer(){
+    public func releasePlayer(){
         playerItem?.cancelPendingSeeks()
         playerItem?.asset.cancelLoading()
         player = nil
@@ -451,7 +451,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     //MARK:跳到指定位置播放
     /// 跳到指定位置播放
     /// - Parameter progress: 0-1 比如50%
-    func setCurProgress(_ progress:CGFloat){
+    public func setCurProgress(_ progress:CGFloat){
         if playerItem != nil && player != nil{
             let curTime = CMTimeGetSeconds((playerItem?.asset.duration)!)*progress
             player?.seek(to: CMTimeMake(value: Int64(curTime), timescale: 1), toleranceBefore: CMTime(value: 1, timescale: 1000), toleranceAfter: CMTimeMake(value: 1, timescale: 1000))
@@ -477,17 +477,17 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     //MARK: 控制中心
     
     /// 控制中心开启
-    func beginReceivingRemoteControl(){
+    public func beginReceivingRemoteControl(){
         UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
     /// 控制中心关闭
-    func endReceivingRemote(){
+    public func endReceivingRemote(){
         UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     /// 配置控制中心和锁屏播放信息
-    func configNowPlayingCenter(){
+    public func configNowPlayingCenter(){
         //        print(playTime+"总时间:"+playDuration)
         var info:[String:Any] = [:]
         info[MPMediaItemPropertyTitle] = curModel?.title
