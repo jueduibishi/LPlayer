@@ -455,6 +455,7 @@ class LPlayerManager:NSObject,URLSessionDataDelegate{
         if playerItem != nil && player != nil{
             let curTime = CMTimeGetSeconds((playerItem?.asset.duration)!)*progress
             player?.seek(to: CMTimeMake(value: Int64(curTime), timescale: 1), toleranceBefore: CMTime(value: 1, timescale: 1000), toleranceAfter: CMTimeMake(value: 1, timescale: 1000))
+
         }
     }
     //MARK: 播放结束
