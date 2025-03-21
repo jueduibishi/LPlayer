@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
 
   
   spec.name         = "LPlayer"
-  spec.version      = "0.0.3"
+  spec.version      = "0.0.5"
   spec.summary      = "一个基础的音频、视频播放器."
 
   
