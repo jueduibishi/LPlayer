@@ -24,7 +24,7 @@ var sendPlarNotify:(_ notifyName: String,_ targets: Any? ,_ userInfo: Any?)->()=
 }
 
 
-enum YFPlayerStatus {
+public enum YFPlayerStatus {
     case YFPlayerStatusNon//default
     case YFPlayerStatusLoadSongInfo
     case YFPlayerStatusReadyToPlay
@@ -75,7 +75,7 @@ class PlayerModel:NSObject{
 }
 @objcMembers
 /// 播放器管理
-class LPlayerManager:NSObject,URLSessionDataDelegate{
+public class LPlayerManager:NSObject,URLSessionDataDelegate{
     
     /// 播放器
     var player:AVPlayer? = nil
@@ -260,7 +260,7 @@ class LPlayerManager:NSObject,URLSessionDataDelegate{
     ///   - object: 监视器
     ///   - change: 状态改变
     ///   - context: 上下文
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "status"{
             ///这里不能用player?.status，非常奇怪，因为网络错误的时候，它无法获取failed，所以直接取status的值。
             let statusNumber:NSNumber = change?[.newKey] as! NSNumber
@@ -538,13 +538,13 @@ class LPlayerManager:NSObject,URLSessionDataDelegate{
     //MARK: URLSessionDataDelegate
     
     //接收到的请求处理
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         imageSize = Int(dataTask.countOfBytesExpectedToReceive)
         //        print("图片大小"+"\(imageSize)")
         completionHandler(.allow)
     }
     //接收到的数据处理
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         if let response = dataTask.response as? HTTPURLResponse{
             
             if response.statusCode == 200{

@@ -10,7 +10,7 @@ import AVFoundation
 
 @objcMembers
 /// 播放层处理成View，否则layer无法自适应
-class LPlayerView: UIView {
+public class LPlayerView: UIView {
     
     private var _player:AVPlayer
     
@@ -23,7 +23,7 @@ class LPlayerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override class var layerClass: AnyClass{
+    public override class var layerClass: AnyClass{
         LCustomLayer.self
     }
     var player :AVPlayer{
