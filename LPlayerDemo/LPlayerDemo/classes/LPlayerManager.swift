@@ -93,7 +93,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
     public var isPlaying:Bool = false
     
     ///本地图片封面
-    public var defaultCoverImageName:String = "defaultCover.png"
+    public var defaultCoverImageName:String = "defaultCover.jpg"
     
     /// 播放进度
     public var progressBlock :playProgressHandel? = nil
@@ -152,7 +152,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
         }
         let frameworkBundle = Bundle(for: self.classForCoder)
         let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("cover.bundle")
-        if defaultCoverImageName == "defaultCover.png"{
+        if defaultCoverImageName == "defaultCover.jpg"{
             return UIImage(named: defaultCoverImageName, in: Bundle(url: bundleURL!), compatibleWith: nil)!
         }
 
