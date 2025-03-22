@@ -35,7 +35,7 @@ public enum YFPlayerStatus {
     case YFPlayerStatusFail
     case YFPlayerStatusEnd
     
-    var description: String {
+    public var description: String {
         switch self {
         case .YFPlayerStatusNon:
             return "Non (Default)"
@@ -151,7 +151,7 @@ public class LPlayerManager:NSObject,URLSessionDataDelegate{
             }
         }
         let frameworkBundle = Bundle(for: self.classForCoder)
-        let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("cover.bundle")
+        let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("LPlayer.bundle")
         if defaultCoverImageName == "defaultCover.jpg"{
             return UIImage(named: defaultCoverImageName, in: Bundle(url: bundleURL!), compatibleWith: nil)!
         }
